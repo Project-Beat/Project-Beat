@@ -1,8 +1,9 @@
 # Project-Beat
+![icon](icon.png)
 
 ## Important for development
 
-We use git lfs in this Repo.
+We use **git lfs** in this Repo.
 
 If you are using the git commandline tool install [Git LFS](https://git-lfs.github.com/)
 and run `git lfs install`.
