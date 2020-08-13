@@ -1,13 +1,13 @@
 extends Node2D
 
 
-onready var time = 0
-export var bpm = 120
-onready var seconds_per_beat = 1 / (bpm / 60.0)
-onready var beat_count = 0
-onready var draw_beat = false
+onready var time: float = 0
+export var bpm: int = 120
+onready var seconds_per_beat: float = 1 / (bpm / 60.0)
+onready var beat_count: int = 0
+onready var draw_beat: bool = false
 
-func _draw():
+func _draw() -> void:
 	update()
 	if(draw_beat):
 		$ColorRect.color = Color(1, 1, 1, 1)
@@ -15,7 +15,7 @@ func _draw():
 		$ColorRect.color = Color(0, 0, 0, 1)
 	
 
-func _process(_delta):
+func _process(_delta) -> void:
 	update();
 	
 	var new_time = $AudioStreamPlayer2D.get_playback_position() + AudioServer.get_time_since_last_mix() - AudioServer.get_output_latency()
@@ -28,5 +28,5 @@ func _process(_delta):
 	else:
 		draw_beat = false;
 
-func _ready():
+func _ready() -> void:
 	$AudioStreamPlayer2D.play(true);
