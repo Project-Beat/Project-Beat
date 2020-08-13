@@ -28,8 +28,16 @@ func _process(delta):
 	for dir in inputs.keys():
 		if Input.is_action_pressed(dir):
 			time_after_last_beat = fmod(parent.time, (parent.beat_count * parent.seconds_per_beat))
-			missed_time = abs(time_after_last_beat - (time_after_last_beat / 2))
+			
+			#if time after the last beat is more than half of time per beat then reverse the value 
+			#(in this case the closer it is gets the next beat and the bigger the better)
+			if(time_after_last_beat <= parent.seconds_per_beat / 2.0):
+				missed_time = time_after_last_beat
+			else:
+				missed_time = parent.seconds_per_beat - time_after_last_beat
+				
 			print("Time to closest beats: " + str(missed_time))
+			
 			move(dir)
 			
 func move(dir):
