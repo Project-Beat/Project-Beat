@@ -36,7 +36,7 @@ func _process(delta) -> void:
 			else:
 				missed_time = parent.seconds_per_beat - time_after_last_beat
 				
-			print("Time to closest beats: " + str(missed_time))
+			print("Time to closest beats: " + str(missed_time) + " " + str(parent.beat_count))
 			
 			move(dir)
 			
