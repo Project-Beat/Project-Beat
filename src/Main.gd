@@ -11,6 +11,7 @@ func _draw() -> void:
 	update()
 	if(draw_beat):
 		$ColorRect.color = Color(1, 1, 1, 1)
+		draw_beat = false;
 	else: 
 		$ColorRect.color = Color(0, 0, 0, 1)
 	
@@ -25,8 +26,6 @@ func _process(_delta) -> void:
 	if(new_beat_count > beat_count): 
 		beat_count = new_beat_count
 		draw_beat = true;
-	else:
-		draw_beat = false;
 
 func _ready() -> void:
 	$AudioStreamPlayer2D.play(true);
