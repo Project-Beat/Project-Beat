@@ -20,6 +20,7 @@ func _ready():
 	position -= Vector2.ONE * parent.tile_size/2
 	
 	tween.connect("tween_completed", self ,"on_tween_end")
+
 	# Adjust animation speed to match movement speed
 	#$AnimationPlayer.playback_speed = speed
 
@@ -57,7 +58,6 @@ func _process(delta):
 			
 			if(last_movement_beat != beat_index):
 				last_movement_beat = beat_index
-			
 			inputs[dir] = true
 
 func handle_movement() -> Vector2:
