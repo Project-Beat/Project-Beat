@@ -1,54 +1,96 @@
-extends Area2D
+extends KinematicBody2D
+
 
 onready var tween = $Tween
-onready var ray = $RayCast2D
 onready var parent = get_parent()
-onready var time_after_last_beat = 0
-onready var missed_time = 0
+onready var last_movement_beat = 0
+onready var inputs = {"right": false,
+			"left": false,
+			"up": false,
+			"down": false}
+onready var isFalling = false
+onready var isJumping = false
 
+export var jumpHeight: int = 4
 export var speed = 3
 
-var tile_size = 64
-var inputs = {"right": Vector2.RIGHT,
-			"left": Vector2.LEFT,
-			"up": Vector2.UP,
-			"down": Vector2.DOWN}
 	
 func _ready():
-	position = position.snapped(Vector2.ONE * tile_size)
-	position += Vector2.ONE * tile_size/2
+	position = position.snapped(Vector2.ONE * parent.tile_size)
+	position -= Vector2.ONE * parent.tile_size/2
+	
+	tween.connect("tween_completed", self ,"on_tween_end")
 	# Adjust animation speed to match movement speed
 	#$AnimationPlayer.playback_speed = speed
+
+func _physics_process(delta):
 	
+	if(not isJumping):
+		var collision = move_and_collide(Vector2.DOWN * parent.tile_size, true, true, true)
+		if(collision == null): 
+			if(not isFalling):
+				move_tween(Vector2.DOWN * parent.tile_size)
+				isFalling = true
+		else:
+			isFalling = false
+	
+	var velocity = handle_movement()
+		
+	if(velocity != Vector2.ZERO):
+		move(velocity)
+
 func _process(delta):
 # use this if you want to only move on keypress
 # func _unhandled_input(event):
 	if tween.is_active():
 		return
+	
+	var temp = parent.get_time_until_closest_beat()
+	var missed_time = temp[0]
+	var beat_index = temp[1]
+	
+	if(last_movement_beat == beat_index): return
+	
 	for dir in inputs.keys():
 		if Input.is_action_pressed(dir):
-			time_after_last_beat = fmod(parent.time, (parent.beat_count * parent.seconds_per_beat))
+			print("Time to the closest beat: " + str(missed_time))
 			
-			#if time after the last beat is more than half of time per beat then reverse the value 
-			#(in this case the closer it is gets the next beat and the bigger the better)
-			if(time_after_last_beat <= parent.seconds_per_beat / 2.0):
-				missed_time = time_after_last_beat
-			else:
-				missed_time = parent.seconds_per_beat - time_after_last_beat
-				
-			print("Time to closest beats: " + str(missed_time))
+			if(last_movement_beat != beat_index):
+				last_movement_beat = beat_index
 			
-			move(dir)
-			
-func move(dir):
-	ray.cast_to = inputs[dir] * tile_size
-	ray.force_raycast_update()
-	if !ray.is_colliding():
-		#AnimationPlayer.play(dir)
-		move_tween(inputs[dir])
+			inputs[dir] = true
+
+func handle_movement() -> Vector2:
+	var velocity = Vector2.ZERO
+	for dir in inputs.keys():
+		if(inputs[dir]):
+			match dir:
+				"right":
+					velocity += Vector2.RIGHT * parent.tile_size
+				"left":
+					velocity += Vector2.LEFT * parent.tile_size
+				"up":
+					velocity += Vector2.UP* jumpHeight * parent.tile_size
+					isJumping = true
+				"down":
+					pass
+	for dir in inputs.keys():
+		inputs[dir] = false
 		
-func move_tween(dir):
+	return velocity
+	
+func move(velocity):
+	var collision = move_and_collide(velocity, true, true, true)
+	if(collision != null): return
+	#AnimationPlayer.play(dir)
+	move_tween(velocity)
+		
+func move_tween(velocity):
 	tween.interpolate_property(self, "position",
-		position, position + dir * tile_size,
+		position, position + velocity,
 		1.0/speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	tween.start()
+
+func on_tween_end(obj, path):
+	isFalling = false
+	isJumping = false

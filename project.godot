@@ -50,6 +50,10 @@ up={
  ]
 }
 
+[physics]
+
+2d/cell_size=32
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
