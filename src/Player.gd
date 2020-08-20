@@ -8,44 +8,37 @@ onready var inputs = {"right": false,
 			"left": false,
 			"up": false,
 			"down": false}
-onready var isFalling = false
-onready var isJumping = false
+onready var is_falling = false
+onready var is_jumping = false
+onready var previous_jumping_position = position
 
-export var jumpHeight: int = 4
-export var speed = 3
+export var jump_height: int = 4
+export var jump_length: int = 4
+export var walking_speed = 3
+export(float, 0.2, 1, 0.2) var jumping_speed = 0.8
+export var facing_dir = 0
 
 	
 func _ready():
-	position = position.snapped(Vector2.ONE * parent.tile_size)
-	position -= Vector2.ONE * parent.tile_size/2
+	position = parent.align_position_with_grid(self.position)
 	
-	tween.connect("tween_completed", self ,"on_tween_end")
-
-	# Adjust animation speed to match movement speed
-	#$AnimationPlayer.playback_speed = speed
+	tween.connect("tween_all_completed", self ,"_on_tween_all_completed")
+	tween.connect("tween_step", self ,"_on_tween_step")
 
 func _physics_process(delta):
+	if(is_jumping or is_falling): return
 	
-	if(not isJumping):
-		var collision = move_and_collide(Vector2.DOWN * parent.tile_size, true, true, true)
-		if(collision == null): 
-			if(not isFalling):
-				move_tween(Vector2.DOWN * parent.tile_size)
-				isFalling = true
-		else:
-			isFalling = false
+	fall()
+	
+	if(is_falling): return
 	
 	var velocity = handle_movement()
-		
 	if(velocity != Vector2.ZERO):
 		move(velocity)
 
 func _process(delta):
-# use this if you want to only move on keypress
-# func _unhandled_input(event):
-	if tween.is_active():
+	if(tween.is_active() or is_falling or is_jumping):
 		return
-	
 	var temp = parent.get_time_until_closest_beat()
 	var missed_time = temp[0]
 	var beat_index = temp[1]
@@ -67,30 +60,83 @@ func handle_movement() -> Vector2:
 			match dir:
 				"right":
 					velocity += Vector2.RIGHT * parent.tile_size
+					facing_dir = 1
 				"left":
 					velocity += Vector2.LEFT * parent.tile_size
+					facing_dir = 0
 				"up":
-					velocity += Vector2.UP* jumpHeight * parent.tile_size
-					isJumping = true
+					jump(Vector2.RIGHT if facing_dir else Vector2.LEFT)
 				"down":
 					pass
 	for dir in inputs.keys():
 		inputs[dir] = false
 		
 	return velocity
-	
+
 func move(velocity):
 	var collision = move_and_collide(velocity, true, true, true)
 	if(collision != null): return
-	#AnimationPlayer.play(dir)
-	move_tween(velocity)
-		
-func move_tween(velocity):
+	
 	tween.interpolate_property(self, "position",
 		position, position + velocity,
-		1.0/speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		1.0/walking_speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	tween.start()
 
-func on_tween_end(obj, path):
-	isFalling = false
-	isJumping = false
+func fall():
+	var collision = move_and_collide(Vector2.DOWN * parent.tile_size, true, true, true)
+	if(collision != null): return
+	
+	tween.interpolate_property(self, "position",
+		position, position + Vector2.DOWN * parent.tile_size,
+		1.0/parent.gravity, Tween.TRANS_LINEAR)
+	tween.start()
+	
+	is_falling = true
+
+func jump(dir):
+	tween.interpolate_property(self, "position:x", position.x, position.x + dir.x * jump_length * parent.tile_size, jumping_speed, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.interpolate_property(self, "position:y", position.y, position.y - jump_height * parent.tile_size, jumping_speed/2, Tween.TRANS_QUAD, Tween.EASE_OUT)
+	tween.interpolate_property(self, "position:y", position.y - jump_height * parent.tile_size, position.y, jumping_speed/2, Tween.TRANS_QUAD, Tween.EASE_IN, jumping_speed/2)
+	tween.start()
+	
+	previous_jumping_position = self.position
+	is_jumping = true
+
+func _on_tween_step(obj, key, elapsed, value):
+	if(not is_jumping): return
+	
+	#Collision detection (still buggy OwO)
+	var tile_shift = round(fmod(value, parent.tile_size) / parent.tile_size)
+	var dir = Vector2.ZERO
+	var new_position = position
+	var interpolating_property = key.get_subname(1)
+	var velocity
+	var collision
+	if(interpolating_property == "x"):
+		velocity = position.x - previous_jumping_position.x
+		if(tile_shift == 1 and velocity > 0):
+			dir = Vector2.RIGHT
+		elif(tile_shift == 0 and velocity < 0):
+			dir = Vector2.LEFT
+	elif(interpolating_property == "y"):
+		velocity = position.y - previous_jumping_position.y
+		if(tile_shift == 1 and velocity > 0):
+			dir = Vector2.DOWN
+		elif(tile_shift == 0 and velocity < 0):
+			dir = Vector2.UP
+
+	if(dir != Vector2.ZERO):
+		position = previous_jumping_position
+		collision = move_and_collide(parent.align_position_with_grid(previous_jumping_position) + dir * parent.tile_size - previous_jumping_position, true, true, true)
+		if(collision != null): 
+			position = parent.align_position_with_grid(previous_jumping_position)
+			is_jumping = false
+			tween.stop_all()
+			tween.remove_all()
+		else:
+			position = new_position
+			previous_jumping_position = position
+
+func _on_tween_all_completed():
+	is_falling = false
+	is_jumping = false

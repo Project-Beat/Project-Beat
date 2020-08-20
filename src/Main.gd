@@ -2,24 +2,23 @@ extends Node2D
 
 var tile_size = 32
 
-
-export var bpm: int
+export var bpm: int = 60
+export var gravity: int = 20
 
 onready var time: float = 0
 onready var seconds_per_beat: float = 1 / (bpm / 60.0)
 onready var beat_count: int = 0
 onready var draw_beat: bool = false
 
-func _draw() -> void:
+func _draw():
 	update()
 	if(draw_beat):
 		$ColorRect.color = Color(1, 1, 1, 1)
 		draw_beat = false
 	else: 
 		$ColorRect.color = Color(0, 0, 0, 1)
-	
 
-func _process(_delta) -> void:
+func _process(_delta):
 	update();
 	
 	var new_time: float = $AudioStreamPlayer.get_playback_position() + AudioServer.get_time_since_last_mix() - AudioServer.get_output_latency()
@@ -30,9 +29,9 @@ func _process(_delta) -> void:
 		beat_count = new_beat_count
 		draw_beat = true
 
-func _ready() -> void:
+func _ready():
 	$AudioStreamPlayer.play(true)
-	
+
 func get_time_until_closest_beat():
 	var time_after_last_beat = fmod(time, (beat_count * seconds_per_beat))
 	
@@ -48,3 +47,6 @@ func get_time_until_closest_beat():
 		beat_index = beat_count
 		
 	return [missed_time, beat_index]
+
+func align_position_with_grid(pos: Vector2) -> Vector2:
+	return (pos / tile_size).floor() * tile_size + Vector2.ONE * tile_size / 2
