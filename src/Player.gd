@@ -32,9 +32,7 @@ func _physics_process(delta):
 	
 	if(is_falling): return
 	
-	var velocity = handle_movement()
-	if(velocity != Vector2.ZERO):
-		move(velocity)
+	handle_movement()
 
 func _process(delta):
 	if(tween.is_active() or is_falling or is_jumping):
@@ -53,8 +51,10 @@ func _process(delta):
 				last_movement_beat = beat_index
 			inputs[dir] = true
 
-func handle_movement() -> Vector2:
+func handle_movement():
 	var velocity = Vector2.ZERO
+	var jump = false
+	
 	for dir in inputs.keys():
 		if(inputs[dir]):
 			match dir:
@@ -65,13 +65,16 @@ func handle_movement() -> Vector2:
 					velocity += Vector2.LEFT * parent.tile_size
 					facing_dir = 0
 				"up":
-					jump(Vector2.RIGHT if facing_dir else Vector2.LEFT)
+					jump = true
 				"down":
 					pass
 	for dir in inputs.keys():
 		inputs[dir] = false
 		
-	return velocity
+	if(jump):
+		jump(Vector2.RIGHT if facing_dir else Vector2.LEFT)
+	elif(velocity != Vector2.ZERO):
+		move(velocity)
 
 func move(velocity):
 	var collision = move_and_collide(velocity, true, true, true)
