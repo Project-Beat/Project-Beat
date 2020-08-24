@@ -39,7 +39,10 @@ func get_time_until_closest_beat():
 	#(in this case the closer it is gets the next beat and the bigger the better)
 	var missed_time = 0
 	var beat_index = -1
-	if(time_after_last_beat <= seconds_per_beat / 2.0 and beat_count > 0):
+	if(time_after_last_beat <= seconds_per_beat / 2.0):
+		if(beat_count == 0): 
+			missed_time = seconds_per_beat / 2.0
+			return
 		missed_time = time_after_last_beat
 		beat_index = beat_count - 1
 	else:
