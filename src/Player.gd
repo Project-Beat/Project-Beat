@@ -123,9 +123,9 @@ func _on_tween_step(obj, key, elapsed, value):
 			dir = Vector2.LEFT
 	elif(interpolating_property == "y"):
 		velocity = position.y - previous_jumping_position.y
-		if(tile_shift == 1 and velocity > 0):
+		if(tile_shift == 0 and velocity > 0):
 			dir = Vector2.DOWN
-		elif(tile_shift == 0 and velocity < 0):
+		elif(tile_shift == 1 and velocity < 0):
 			dir = Vector2.UP
 
 	if(dir != Vector2.ZERO):
