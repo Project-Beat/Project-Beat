@@ -20,7 +20,7 @@ texture = ExtResource( 1 )
 motion_scale = Vector2( 0.4, 0.4 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Background_Layers/Background3"]
-position = Vector2( 0, -200 )
+position = Vector2( -400, -200 )
 color = Color( 0.768627, 0.819608, 0.67451, 1 )
 polygon = PoolVector2Array( 400, 480, 640, 640, 800, 680, 1280, 760, 1800, 880, 1240, 1080, 640, 1080, 200, 920, -80, 760, 240, 560, 200, 480, 240, 240, 200, 120, 120, 120, 280, -80, 480, -80, 640, 40, 440, 160, 360, 120, 280, 120, 280, 240, 280, 360, 280, 520, 320, 520 )
 
@@ -28,7 +28,7 @@ polygon = PoolVector2Array( 400, 480, 640, 640, 800, 680, 1280, 760, 1800, 880, 
 motion_scale = Vector2( 0.6, 0.6 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Background_Layers/Background2"]
-position = Vector2( 40, -200 )
+position = Vector2( -320, -200 )
 color = Color( 0.490196, 0.592157, 0.458824, 1 )
 polygon = PoolVector2Array( 1640, 600, 1600, 480, 1560, 360, 1600, 280, 1800, 200, 1600, 40, 1240, 160, 1400, 280, 1520, 320, 1560, 520, 1560, 600, 1280, 800, 800, 920, 680, 1120, 1680, 1160, 1960, 1000, 1640, 600 )
 
