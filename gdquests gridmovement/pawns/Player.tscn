@@ -61,7 +61,7 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.20007, 0.917384 ), Vector2( 0.916712, 1.13495 ), Vector2( 1, 1 ) ]
 }
 
-[node name="Actor" type="Node2D"]
+[node name="Player" type="Node2D"]
 position = Vector2( 40, 40 )
 z_index = 1
 script = ExtResource( 1 )
@@ -76,6 +76,8 @@ anims/walk = SubResource( 2 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -4 )
+scale = Vector2( 1, 1.125 )
 texture = ExtResource( 2 )
 centered = false
 offset = Vector2( -32, -32 )

@@ -7,7 +7,7 @@ func _ready():
 
 func _process(delta):
 	var input_direction = get_input_direction()
-	if not input_direction:
+	if not input_direction or (input_direction.y != 0):
 		return
 	update_look_direction(input_direction)
 

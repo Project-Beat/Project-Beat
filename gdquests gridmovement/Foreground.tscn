@@ -1,0 +1,7 @@
+[gd_scene format=2]
+
+[node name="Foreground" type="ParallaxBackground"]
+
+[node name="ParallaxLayer1" type="ParallaxLayer" parent="."]
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
