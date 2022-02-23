@@ -2,13 +2,14 @@
 
 [ext_resource path="res://tilesets/environment/foreground/foreground_texture_1.png" type="Texture" id=1]
 
-[node name="Foreground" type="ParallaxBackground"]
+[node name="Foreground_Layer" type="ParallaxBackground"]
 
 [node name="ParallaxLayer1" type="ParallaxLayer" parent="."]
 motion_scale = Vector2( 1.2, 1 )
 motion_mirroring = Vector2( 1920, 0 )
 
 [node name="foreground_texture_1" type="Sprite" parent="ParallaxLayer1"]
+modulate = Color( 0.219608, 0.219608, 0.219608, 1 )
 position = Vector2( 980, 0 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )

@@ -1,0 +1,1 @@
+A platfromer where you can move freely in the levels. You have goals but you have to find out how to reach them. You might as well visit old places to find secrets etc.

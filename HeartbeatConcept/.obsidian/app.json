@@ -1,0 +1,22 @@
+{
+  "showLineNumber": false,
+  "promptDelete": false,
+  "showFrontmatter": false,
+  "defaultViewMode": "preview",
+  "foldIndent": true,
+  "foldHeading": true,
+  "smartIndentList": true,
+  "pdfExportSettings": {
+    "pageSize": "Letter",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 72
+  },
+  "fileSortOrder": "alphabetical",
+  "alwaysUpdateLinks": true,
+  "attachmentFolderPath": "attachements",
+  "newFileLocation": "current",
+  "showUnsupportedFiles": true,
+  "communityPluginSortOrder": "download",
+  "legacyEditor": false
+}

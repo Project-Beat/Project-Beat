@@ -1,24 +1,25 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://tilesets/grid_lines/grid_lines_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://tilesets/grid/grid_tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://grid/grid.gd" type="Script" id=3]
 [ext_resource path="res://pawns/Player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://pawns/pawn.gd" type="Script" id=5]
-[ext_resource path="res://pawns/sprites/character_grey.png" type="Texture" id=6]
-[ext_resource path="res://pawns/sprites/star.png" type="Texture" id=7]
-[ext_resource path="res://Foreground.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Background.tscn" type="PackedScene" id=9]
-[ext_resource path="res://tilesets/ground/ground_texture_2.png" type="Texture" id=10]
-[ext_resource path="res://tilesets/ground/ground_texture_1.png" type="Texture" id=11]
+[ext_resource path="res://Background_Layer.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Foreground_Layer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://tilesets/environment/ground/ground_texture_2.png" type="Texture" id=10]
+[ext_resource path="res://tilesets/environment/ground/ground_texture_1.png" type="Texture" id=11]
 
 [node name="Game" type="Node"]
 
-[node name="Foreground" parent="." instance=ExtResource( 8 )]
+[node name="Background_Layer" parent="." instance=ExtResource( 5 )]
+
+[node name="ParallaxLayer3" parent="Background_Layer" index="0"]
+visible = true
 
 [node name="Main_Layer" type="ParallaxBackground" parent="."]
 
 [node name="ground2" type="ParallaxLayer" parent="Main_Layer"]
+modulate = Color( 0.509804, 0.509804, 0.509804, 1 )
 
 [node name="ground_texture_2_1" type="Sprite" parent="Main_Layer/ground2"]
 position = Vector2( 400, 880 )
@@ -34,6 +35,18 @@ offset = Vector2( -160, 0 )
 
 [node name="ground_texture_2_3" type="Sprite" parent="Main_Layer/ground2"]
 position = Vector2( 1680, 880 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 10 )
+offset = Vector2( -160, 0 )
+
+[node name="ground_texture_2_4" type="Sprite" parent="Main_Layer/ground2"]
+position = Vector2( 2320, 880 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 10 )
+offset = Vector2( -160, 0 )
+
+[node name="ground_texture_2_5" type="Sprite" parent="Main_Layer/ground2"]
+position = Vector2( 2960, 880 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
 offset = Vector2( -160, 0 )
@@ -66,25 +79,10 @@ position = Vector2( 940, 860 )
 current = true
 limit_bottom = 1080
 smoothing_enabled = true
-
-[node name="Actor3" type="Node2D" parent="Main_Layer/gameplay/Grid"]
-position = Vector2( 864, 160 )
-z_index = 1
-script = ExtResource( 5 )
-
-[node name="Sprite" type="Sprite" parent="Main_Layer/gameplay/Grid/Actor3"]
-rotation = -3.13614
-texture = ExtResource( 6 )
-
-[node name="Object5" type="Node2D" parent="Main_Layer/gameplay/Grid"]
-position = Vector2( 928, 288 )
-script = ExtResource( 5 )
-type = 2
-
-[node name="Sprite" type="Sprite" parent="Main_Layer/gameplay/Grid/Object5"]
-texture = ExtResource( 7 )
+smoothing_speed = 2.0
 
 [node name="ground1" type="ParallaxLayer" parent="Main_Layer"]
+modulate = Color( 0.490196, 0.490196, 0.490196, 1 )
 
 [node name="ground_texture_1_1" type="Sprite" parent="Main_Layer/ground1"]
 position = Vector2( 320, 880 )
@@ -101,4 +99,18 @@ position = Vector2( 1600, 880 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 11 )
 
-[node name="Background" parent="." instance=ExtResource( 9 )]
+[node name="ground_texture_1_4" type="Sprite" parent="Main_Layer/ground1"]
+position = Vector2( 2240, 880 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 11 )
+
+[node name="ground_texture_1_5" type="Sprite" parent="Main_Layer/ground1"]
+position = Vector2( 2880, 880 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 11 )
+
+[node name="Foreground_Layer" parent="." instance=ExtResource( 6 )]
+
+[editable path="Background_Layer"]
+
+[editable path="Foreground_Layer"]

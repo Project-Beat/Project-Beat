@@ -1,0 +1,134 @@
+{
+  "main": {
+    "id": "de3b4f72e72a8daf",
+    "type": "split",
+    "children": [
+      {
+        "id": "d6836bf66eccc743",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Gameplay.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "673cef9e583d065b",
+    "type": "split",
+    "children": [
+      {
+        "id": "575d74db3961c66b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ffbd1e20d9efdfe6",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "df75469f72001e8c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "4fe0cc46392efb50",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "e4a7e66445165aa1",
+    "type": "split",
+    "children": [
+      {
+        "id": "797eaa940c0f32d4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "cf3a7e135b87ddbc",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Gameplay.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "21de7cf24943f61d",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Gameplay.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "8a4b86c8872734db",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "d6836bf66eccc743",
+  "lastOpenFiles": [
+    "Gameplay.md",
+    "info/platformer perspective.md",
+    "Cocept.md",
+    "info/Rhythm Game.md",
+    "Lore.md",
+    "Look&Feel.md",
+    "info/MetroidVania.md",
+    "Unbenannt.md",
+    "Wunschliste.md",
+    "Watchlist.md"
+  ]
+}
