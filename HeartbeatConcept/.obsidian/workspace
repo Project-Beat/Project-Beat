@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Gameplay.md",
+            "file": "Cocept (start).md",
             "mode": "source",
             "source": false
           }
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Gameplay.md",
+                "file": "Cocept (start).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Gameplay.md",
+                "file": "Cocept (start).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -120,12 +120,12 @@
   },
   "active": "d6836bf66eccc743",
   "lastOpenFiles": [
-    "Gameplay.md",
+    "Cocept (start).md",
+    "concept/Gameplay.md",
     "info/platformer perspective.md",
-    "Cocept.md",
     "info/Rhythm Game.md",
-    "Lore.md",
-    "Look&Feel.md",
+    "concept/Lore.md",
+    "concept/Look&Feel.md",
     "info/MetroidVania.md",
     "Unbenannt.md",
     "Wunschliste.md",
